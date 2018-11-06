@@ -137,12 +137,11 @@ def export2loom(ex_mtx: pd.DataFrame, regulons: List[Regulon], cell_annotations:
     # PySCENIC chose a different orientation because of limitation set by the feather format: selectively reading
     # information from disk can only be achieved via column selection. For the ranking databases this is of utmost
     # importance.
-    fh = lp.create(filename=out_fname,
-              matrix=ex_mtx.T.values,
+    lp.create(filename=out_fname,
+              layers=ex_mtx.T.values,
               row_attrs=row_attrs,
               col_attrs=column_attrs,
               file_attrs=general_attrs)
-    fh.close()
 
 
 def export_regulons(regulons: Sequence[Regulon], fname: str) -> None:
