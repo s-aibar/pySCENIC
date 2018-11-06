@@ -48,9 +48,11 @@ def export2loom(ex_mtx: pd.DataFrame, regulons: List[Regulon], cell_annotations:
     # Create an embedding based on tSNE.
     # Name of columns should be "_X" and "_Y".
     if tsne_embedding_mtx is None:
-        tsne_embedding_mtx = pd.DataFrame(data=TSNE().fit_transform(auc_mtx),
-                                      index=ex_mtx.index, columns=['_X', '_Y']) # (n_cells, 2)
+        tsne_embedding_mtx = TSNE().fit_transform(auc_mtx)
 
+    tsne_embedding_mtx = pd.DataFrame(data=tsne_embedding_mtx,
+                                      index=ex_mtx.index, columns=['_X', '_Y']) # (n_cells, 2)
+    
     # Calculate the number of genes per cell.
     binary_mtx = ex_mtx.copy()
     binary_mtx[binary_mtx != 0] = 1.0
